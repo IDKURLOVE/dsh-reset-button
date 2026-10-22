@@ -1,5 +1,5 @@
 /**
- * dsh-restart — Client half.
+ * dsh-reset-button — Client half.
  *
  * 在对话框工具栏（composer tool row）里、`conversation.input.right` 槽位上挂一个
  * 「重启」按钮 —— 也就是「完全权限」所在那一行的右侧。点击后：
@@ -8,7 +8,7 @@
  *      （= `ipcRenderer.invoke('harness:restart')`），由 DSH Desktop 自己完成重启，
  *      这是最干净的一条路。
  *   2) 原生桥不可用时（例如用浏览器打开 DSH Web）：回退到本插件 Host half 的
- *      `POST /dsh-restart/restart`，由 Host 侧拉起 detached 脚本重启桌面应用。
+ *      `POST /dsh-reset-button/restart`，由 Host 侧拉起 detached 脚本重启桌面应用。
  *   3) 两条路都不通：按钮上报错误，不做任何破坏性动作。
  *
  * 加载约定：DSH 的 web 插件表按包名扫描 `package.json` 的 `dsh.client` 字段，再把本文件
@@ -16,7 +16,7 @@
  * 全部逻辑保持单文件、零运行时依赖（只 require 宿主提供的 react）。
  */
 window.__ModuleLoader__.load({
-  id: "dsh-restart",
+  id: "dsh-reset-button",
   factory: (require) => {
     var module = { exports: {} };
     var exports = module.exports;
@@ -25,13 +25,13 @@ window.__ModuleLoader__.load({
     const react = require("react");
     const h = react.createElement;
 
-    const name = "dsh-restart";
+    const name = "dsh-reset-button";
     const inject = ["slots", "locale"];
-    const NS = "dsh-restart";
+    const NS = "dsh-reset-button";
     const SLOT = "conversation.input.right";
-    const ENTRY_ID = "dsh-restart";
-    const STYLE_ID = "dsh-restart-style";
-    const HOST_ROUTE = "/dsh-restart/restart";
+    const ENTRY_ID = "dsh-reset-button";
+    const STYLE_ID = "dsh-reset-button-style";
+    const HOST_ROUTE = "/dsh-reset-button/restart";
 
     const ZH = {
       label: "重启",
@@ -55,20 +55,20 @@ window.__ModuleLoader__.load({
     };
 
     const CSS = [
-      ".dshRestartButton{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;",
+      ".dshResetButton{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 9px;",
       "border-radius:6px;border:1px solid var(--dsw-alias-border-l1);background:transparent;",
       "color:var(--dsw-alias-label-secondary);font-size:12px;line-height:1;font-family:inherit;",
       "cursor:pointer;white-space:nowrap;transition:background .15s ease,color .15s ease,border-color .15s ease;}",
-      ".dshRestartButton:hover:not(:disabled){background:var(--dsw-alias-bg-layer-2);",
+      ".dshResetButton:hover:not(:disabled){background:var(--dsw-alias-bg-layer-2);",
       "color:var(--dsw-alias-label-primary);border-color:var(--dsw-alias-border-l2);}",
-      ".dshRestartButton:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:1px;}",
-      ".dshRestartButton:disabled{cursor:default;opacity:.62;}",
-      ".dshRestartButton.isBusy{color:var(--dsw-alias-brand-primary);border-color:var(--dsw-alias-brand-primary);}",
-      ".dshRestartButton.isError{color:var(--dsw-alias-state-error-primary);border-color:var(--dsw-alias-state-error-primary);}",
-      ".dshRestartIcon{width:13px;height:13px;flex:0 0 auto;display:block;}",
-      ".dshRestartButton.isBusy .dshRestartIcon{animation:dshRestartSpin .9s linear infinite;}",
-      "@keyframes dshRestartSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}",
-      "@media (max-width:560px){.dshRestartLabel{display:none}.dshRestartButton{padding:0 7px}}",
+      ".dshResetButton:focus-visible{outline:2px solid var(--dsw-alias-brand-primary);outline-offset:1px;}",
+      ".dshResetButton:disabled{cursor:default;opacity:.62;}",
+      ".dshResetButton.isBusy{color:var(--dsw-alias-brand-primary);border-color:var(--dsw-alias-brand-primary);}",
+      ".dshResetButton.isError{color:var(--dsw-alias-state-error-primary);border-color:var(--dsw-alias-state-error-primary);}",
+      ".dshResetIcon{width:13px;height:13px;flex:0 0 auto;display:block;}",
+      ".dshResetButton.isBusy .dshResetIcon{animation:dshResetSpin .9s linear infinite;}",
+      "@keyframes dshResetSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}",
+      "@media (max-width:560px){.dshResetLabel{display:none}.dshResetButton{padding:0 7px}}",
     ].join("");
 
     function ensureStyle() {
@@ -84,7 +84,7 @@ window.__ModuleLoader__.load({
       return h(
         "svg",
         {
-          className: "dshRestartIcon",
+          className: "dshResetIcon",
           viewBox: "0 0 16 16",
           fill: "none",
           stroke: "currentColor",
@@ -168,15 +168,15 @@ window.__ModuleLoader__.load({
         {
           type: "button",
           className:
-            "dshRestartButton" + (busy ? " isBusy" : "") + (failed && !busy ? " isError" : ""),
+            "dshResetButton" + (busy ? " isBusy" : "") + (failed && !busy ? " isError" : ""),
           title: busy ? t("busyTitle") : errorTitle || t("title"),
           "aria-label": t("label"),
-          "data-testid": "dsh-restart-button",
+          "data-testid": "dsh-reset-button-button",
           disabled: busy,
           onClick,
         },
         h(RestartIcon, null),
-        h("span", { className: "dshRestartLabel" }, busy ? t("busy") : t("label")),
+        h("span", { className: "dshResetLabel" }, busy ? t("busy") : t("label")),
       );
     }
 
@@ -184,7 +184,7 @@ window.__ModuleLoader__.load({
       ensureStyle();
       ctx.effect(
         () => ctx.locale.register(NS, { zh: ZH, en: EN }),
-        "dsh-restart: dictionaries",
+        "dsh-reset-button: dictionaries",
       );
       const t = ctx.locale.bind(NS);
       ctx.slots.inject(SLOT, () =>

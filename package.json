@@ -1,5 +1,5 @@
 {
-  "name": "dsh-restart",
+  "name": "dsh-reset-button",
   "version": "1.0.0",
   "type": "module",
   "description": "DSH 一键重启按钮：在对话框工具栏「完全权限」右侧加一个「重启」，点击即重启 DSH，省掉每次装完插件手动关掉再打开。",
@@ -34,11 +34,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IDKURLOVE/dsh-restart.git"
+    "url": "git+https://github.com/IDKURLOVE/dsh-reset-button.git"
   },
-  "homepage": "https://github.com/IDKURLOVE/dsh-restart#readme",
+  "homepage": "https://github.com/IDKURLOVE/dsh-reset-button#readme",
   "bugs": {
-    "url": "https://github.com/IDKURLOVE/dsh-restart/issues"
+    "url": "https://github.com/IDKURLOVE/dsh-reset-button/issues"
   },
   "dsh": {
     "bundle": {

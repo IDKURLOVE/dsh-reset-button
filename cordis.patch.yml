@@ -1,4 +1,4 @@
-# dsh-restart bundle patch: inserts the plugin row into the profile roster.
+# dsh-reset-button bundle patch: inserts the plugin row into the profile roster.
 - insert:
-    - id: dsh-restart
-      name: 'dsh-restart'
+    - id: dsh-reset-button
+      name: 'dsh-reset-button'

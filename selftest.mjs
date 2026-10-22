@@ -1,5 +1,5 @@
 /**
- * dsh-restart selftest — 结构契约校验（不需要跑起 DSH）。
+ * dsh-reset-button selftest — 结构契约校验（不需要跑起 DSH）。
  *
  *   node selftest.mjs
  *
@@ -29,7 +29,7 @@ const client = read('client.js')
 const host = read('lib/index.js')
 
 console.log('package.json')
-check('name', pkg.name === 'dsh-restart', pkg.name)
+check('name', pkg.name === 'dsh-reset-button', pkg.name)
 check('main -> lib/index.js', pkg.main === 'lib/index.js', pkg.main)
 check('exports ./client', pkg.exports && pkg.exports['./client'] === './client.js')
 check('dsh.bundle.patch', pkg.dsh?.bundle?.patch === './cordis.patch.yml')
@@ -39,20 +39,20 @@ check('license = MIT', pkg.license === 'MIT', pkg.license)
 
 console.log('client.js')
 check('走 __ModuleLoader__.load', client.includes('window.__ModuleLoader__.load'))
-check('id = dsh-restart', /id:\s*"dsh-restart"/.test(client))
+check('id = dsh-reset-button', /id:\s*"dsh-reset-button"/.test(client))
 check('exports.name / inject / apply', /exports\.name\s*=/.test(client) && /exports\.inject\s*=/.test(client) && /exports\.apply\s*=/.test(client))
 check('inject 含 slots 与 locale', /const inject = \["slots", "locale"\]/.test(client))
 check('槽位 = conversation.input.right', /const SLOT = "conversation\.input\.right"/.test(client))
 check('优先原生桥 dshDesktop.restartHarness', client.includes('restartHarness'))
-check('有 host 兜底路由', client.includes('/dsh-restart/restart'))
+check('有 host 兜底路由', client.includes('/dsh-reset-button/restart'))
 check('注册进 slots.inject + slots.register', client.includes('ctx.slots.inject') && client.includes('ctx.slots.register'))
 check('不改动全局样式表重复注入', client.includes('document.getElementById(STYLE_ID)'))
 check('用主题变量而非硬编码颜色', client.includes('--dsw-alias-'))
 
 console.log('lib/index.js')
 check('inject = [webServer]', /export const inject = \['webServer'\]/.test(host))
-check('注册 restart 路由', host.includes("'/dsh-restart/restart'"))
-check('注册 status 路由', host.includes("'/dsh-restart/status'"))
+check('注册 restart 路由', host.includes("'/dsh-reset-button/restart'"))
+check('注册 status 路由', host.includes("'/dsh-reset-button/status'"))
 check('只接受回环地址', host.includes('isLoopback'))
 check('detached 重启脚本', host.includes('detached: true') && host.includes('taskkill'))
 check('安全阀：必须是 DSH 桌面应用', host.includes('not-a-dsh-desktop-runtime'))
