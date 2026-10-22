@@ -3,3 +3,7 @@ dist/
 *.log
 .DS_Store
 Thumbs.db
+
+# 本地发布辅助（含 npm 2FA secret，绝不入库）
+.publish/
+*.secret
