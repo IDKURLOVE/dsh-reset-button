@@ -1,0 +1,58 @@
+{
+  "name": "dsh-restart",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "DSH 一键重启按钮：在对话框工具栏「完全权限」右侧加一个「重启」，点击即重启 DSH，省掉每次装完插件手动关掉再打开。",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "selftest": "node selftest.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh-desktop",
+    "restart",
+    "relaunch"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "IDKURLOVE",
+    "url": "https://github.com/IDKURLOVE"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IDKURLOVE/dsh-restart.git"
+  },
+  "homepage": "https://github.com/IDKURLOVE/dsh-restart#readme",
+  "bugs": {
+    "url": "https://github.com/IDKURLOVE/dsh-restart/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
